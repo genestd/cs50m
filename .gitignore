@@ -1,1 +1,5 @@
 launch.json
+.DS_Store
+
+project1/node_modules/**/*
+project1/.expo/*
