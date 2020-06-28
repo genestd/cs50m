@@ -1,19 +1,26 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React, { createContext, useReducer } from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack'
+import SearchScreen from './screens/SearchScreen'
+import ResultsScreen from './screens/ResultsScreen'
+import INITIAL_STATE from './store/initialState'
+import reducer from './store/reducer'
+import { Provider } from './store/context'
+import DetailScreen from './screens/DetailScreen';
 
-export default function App() {
+const MainNavigator = createStackNavigator({
+  Search: SearchScreen,
+  Results: ResultsScreen,
+  Details: DetailScreen
+})
+const Nav = createAppContainer(MainNavigator)
+
+export default () => {
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! Test</Text>
-    </View>
-  );
+    <Provider value={{state, dispatch}}>
+      <Nav />
+    </Provider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
